@@ -10,31 +10,25 @@ import java.util.ArrayList;
  */
 public class Randomizer
 {
-    public static void ConstructDefaultArray()
+    static ArrayList<String> names = new ArrayList<String>();
+    static ArrayList<String> shuffledNames = new ArrayList<String>();
+    public static void main(String[] args)
     {
-        ArrayList<String> names = new ArrayList<String>();
-        Scanner myScannerInput;
-        try
-        {
-            myScannerInput = new Scanner(new File("names.txt"));
-        }
-        catch (java.io.FileNotFoundException e)
-        {
-            System.out.println("FileNotFoundException: " + e.getMessage());
-            return;
-        }
-        while (myScannerInput.hasNextLine())
-        {
-            String line = myScannerInput.nextLine();
-            names.add(line);
-        }
-        System.out.println(names);
+        ClearShuffledArray();
+        ReadNames();
+        Randomize();
+        PrintPairs();
     }
     
-    public static void ShuffleArray()
+    private static void ClearShuffledArray() 
     {
-        //ConstructDefaultArray();
-        ArrayList<String> names = new ArrayList<String>();
+           while (shuffledNames.size() > 0) {
+               shuffledNames.remove(0);
+           } 
+    }
+    
+    private static void ReadNames()
+    {
         Scanner myScannerInput;
         try
         {
@@ -50,14 +44,26 @@ public class Randomizer
             String line = myScannerInput.nextLine();
             names.add(line);
         }
-        ArrayList<String> shuffledNames = new ArrayList<String>();
-        while (names.size() > 0) {
-            int selection = (int) Math.random()*names.size();
-            shuffledNames.add(names.get(selection));
+    }
+    
+    private static void Randomize() 
+    {
+        int initialSize = names.size();
+        int selection;
+        for (int i = 0;  i < initialSize; i++) {
+            selection = (int) (Math.random()*names.size());
+            shuffledNames.add(i, names.get(selection));
             names.remove(selection);
         }
-        System.out.println(shuffledNames);
-        System.out.println(names);
-        System.out.println("Complete.");
+    }
+    
+    private static void PrintPairs()
+    {
+        for (int i = 0;  i < shuffledNames.size()-1; i++) {
+            System.out.println(shuffledNames.get(i) + " is assigned to " 
+            + shuffledNames.get(i+1));
+        }
+        System.out.println(shuffledNames.get(shuffledNames.size()-1) +
+        " is assigned to " + shuffledNames.get(0));
     }
 }
