@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * @author (Sam Levine) 
  * @version (12-2-2019)
  */
-public class Randomizer
+public class SecretSanta
 {
     static ArrayList<String> names = new ArrayList<String>();
     static ArrayList<String> shuffledNames = new ArrayList<String>();
